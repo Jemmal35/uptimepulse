@@ -79,7 +79,8 @@ EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
 DEFAULT_FROM_EMAIL=Uptime Pulse Alert <alerts@uptimepulse.local>
 ALERT_RECIPIENT_EMAIL=admin@uptimepulse.local
 
-
+```
+---
 #Spin Up the Containers
 Build and start all services in detached mode:
 
