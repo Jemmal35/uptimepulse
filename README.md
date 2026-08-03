@@ -83,18 +83,20 @@ ALERT_RECIPIENT_EMAIL=admin@uptimepulse.local
 ---
 #Spin Up the Containers
 Build and start all services in detached mode:
-
+```bash
 docker compose up -d --build
+```
 
-#Run Migrations & Create Admin User
-##Initialize the database tables and set up your administrator account:
+# Run Migrations & Create Admin User
+## Initialize the database tables and set up your administrator account:
 
 # Apply database migrations
+```bash
 docker compose exec web python manage.py migrate
 
 # Create admin user
 docker compose exec web python manage.py createsuperuser
-
+```
 ## 🧪 Verification & Testing
 
 ### Access Points
@@ -115,27 +117,27 @@ docker compose exec web python manage.py createsuperuser
 ## 🛠️ Essential Operational Commands
 
 ### Monitoring Logs
-```bash
-# View live logs for all running services
-docker compose logs -f
+    ```bash
+    # View live logs for all running services
+    docker compose logs -f
 
-# Tail logs specifically for Celery workers
-docker compose logs celery_worker --tail 50 -f
+    # Tail logs specifically for Celery workers
+    docker compose logs celery_worker --tail 50 -f
 
-# Tail logs specifically for Celery Beat scheduler
-docker compose logs celery_beat --tail 50 -f
+    # Tail logs specifically for Celery Beat scheduler
+    docker compose logs celery_beat --tail 50 -f
 
-#Container Management
-# Check service health status
-docker compose ps
+    #Container Management
+    # Check service health status
+    docker compose ps
 
-# Restart worker (apply Python code changes to background tasks)
-docker compose restart celery_worker
+    # Restart worker (apply Python code changes to background tasks)
+    docker compose restart celery_worker
 
-# Stop all containers
-docker compose down
-
-#Project Structure
+    # Stop all containers
+    docker compose down
+```
+# Project Structure
 ├── config/                  # Django project configuration & Celery app initialization
 ├── monitoring/              # Primary application module
 │   ├── tasks.py             # Celery background tasks (pings, cache updates, emails)
