@@ -90,7 +90,7 @@ docker compose up -d --build
 # Run Migrations & Create Admin User
 ## Initialize the database tables and set up your administrator account:
 
-# Apply database migrations
+### Apply database migrations
 ```bash
 docker compose exec web python manage.py migrate
 
@@ -126,8 +126,8 @@ docker compose exec web python manage.py createsuperuser
 
     # Tail logs specifically for Celery Beat scheduler
     docker compose logs celery_beat --tail 50 -f
-
-    #Container Management
+    ```
+### Container Management
     # Check service health status
     docker compose ps
 
@@ -136,8 +136,8 @@ docker compose exec web python manage.py createsuperuser
 
     # Stop all containers
     docker compose down
-```
-# Project Structure
+    ```
+ # Project Structure
 ├── config/                  # Django project configuration & Celery app initialization
 ├── monitoring/              # Primary application module
 │   ├── tasks.py             # Celery background tasks (pings, cache updates, emails)
