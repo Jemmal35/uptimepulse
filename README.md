@@ -128,6 +128,7 @@ docker compose exec web python manage.py createsuperuser
     docker compose logs celery_beat --tail 50 -f
     ```
 ### Container Management
+    ```bash
     # Check service health status
     docker compose ps
 
