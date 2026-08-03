@@ -137,7 +137,7 @@ docker compose exec web python manage.py createsuperuser
 
     # Stop all containers
     docker compose down
-    ```
+
  # Project Structure
     
 ├── config/                  # Django project configuration & Celery app initialization
