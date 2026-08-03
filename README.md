@@ -126,7 +126,7 @@ docker compose exec web python manage.py createsuperuser
 
     # Tail logs specifically for Celery Beat scheduler
     docker compose logs celery_beat --tail 50 -f
-    ```
+    
 ### Container Management
     ```bash
     # Check service health status
@@ -139,6 +139,7 @@ docker compose exec web python manage.py createsuperuser
     docker compose down
     ```
  # Project Structure
+    
 ├── config/                  # Django project configuration & Celery app initialization
 ├── monitoring/              # Primary application module
 │   ├── tasks.py             # Celery background tasks (pings, cache updates, emails)
