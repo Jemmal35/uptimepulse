@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+venv/
+*.log
+db.sqlite3
+db.sqlite3-journal
+celerybeat-schedule
+celerybeat.pid
+dump.rdb
+postgres_data/
