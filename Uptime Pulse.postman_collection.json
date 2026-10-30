@@ -1,0 +1,547 @@
+{
+  "info": {
+    "_postman_id": "f88170b3-0899-4fe1-b6af-3a2d6405ff8d",
+    "name": "Uptime Pulse",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "34284947"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"demo@example.com\", \"username\": \"demo\", \"password\": \"a-strong-pass-123\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base}}/auth/register/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "auth",
+            "register",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const data = pm.response.json();\r\npm.environment.set(\"access\", data.access);\r\npm.environment.set(\"refresh\", data.refresh);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "// {\r\n//   \"email\": \"ajef2021@gmail.com\",\r\n//   \"password\": \"##Letme1n2026\"\r\n// }\r\n{\"email\": \"demo@example.com\", \"password\": \"a-strong-pass-123\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base}}/auth/token/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "auth",
+            "token",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Who am I",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base}}/auth/me/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "auth",
+            "me",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Refresh token",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"refresh\": \"{{json_web_token_13b1}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base}}/auth/token/refresh/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "auth",
+            "token",
+            "refresh",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create a site",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.environment.set(\"site_id\", pm.response.json().id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Test - 500 Error\", \"url\": \"https://httpbin.org/status/500\", \"check_interval\": 60, \"expected_status_code\": 200, \"timeout_seconds\": 10}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base}}/sites/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "sites",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List sites",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const data = pm.response.json();\r\npm.environment.set(\"access\", data.access);\r\npm.environment.set(\"refresh\", data.refresh);"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Test - 500 Error\", \"url\": \"https://httpbin.org/status/500\", \"check_interval\": 60, \"expected_status_code\": 200, \"timeout_seconds\": 10}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base}}/sites/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "sites",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Site detail",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Renamed\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base}}/sites/{{site_id}}/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "sites",
+            "{{site_id}}",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Renamed\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base}}/sites/{{site_id}}/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "sites",
+            "{{site_id}}",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Manual check",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base}}/sites/{{site_id}}/check/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "sites",
+            "{{site_id}}",
+            "check",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Metrics",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base}}/sites/{{site_id}}/metrics/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "sites",
+            "{{site_id}}",
+            "metrics",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Chart data",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base}}/sites/{{site_id}}/chart-data/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "sites",
+            "{{site_id}}",
+            "chart-data",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Incidents",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base}}/sites/incidents/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "sites",
+            "incidents",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Incident Single Site",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base}}/sites/{{site_id}}/incidents/",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "sites",
+            "{{site_id}}",
+            "incidents",
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "access",
+      "value": ""
+    },
+    {
+      "key": "refresh",
+      "value": ""
+    },
+    {
+      "key": "base",
+      "value": ""
+    },
+    {
+      "key": "site_id",
+      "value": ""
+    },
+    {
+      "key": "json_web_token_13b1",
+      "secret": true
+    }
+  ]
+}
