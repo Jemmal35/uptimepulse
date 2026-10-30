@@ -5,6 +5,7 @@ from datetime import timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
+from rest_framework.exceptions import NotFound
 
 from django.core.cache import cache
 from django.shortcuts import get_object_or_404
@@ -125,12 +126,21 @@ class ManualCheckApiView(APIView):
 
 class IncidentReportListView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    
-    def get(self, request):
-        user = request.user
-        incidents = IncidentReport.objects.filter(check_log__site__user = user).order_by('-created_at')
-        serializer = IncidentReportSerializer(incidents, many = True)
-        return Response(serializer.data, status= status.HTTP_200_OK)
+
+    def get(self, request, site_id=None):
+        incidents = (IncidentReport.objects
+                     .filter(check_log__site__user=request.user)
+                     .select_related('check_log', 'check_log__site')
+                     .order_by('-created_at'))
+
+        if site_id is not None:
+            # 404 for a missing site or one owned by someone else
+            if not MonitoredSite.objects.filter(id=site_id, user=request.user).exists():
+                raise NotFound("Site not found.")
+            incidents = incidents.filter(check_log__site_id=site_id)
+
+        serializer = IncidentReportSerializer(incidents, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
 
     

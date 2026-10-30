@@ -1,13 +1,36 @@
+# Secrets and environment
 .env
 .env.*
 !.env.example
+
+# Python
 __pycache__/
 *.py[cod]
+*.egg-info/
 venv/
+.venv/
+env/
+
+# Django
 *.log
 db.sqlite3
 db.sqlite3-journal
-celerybeat-schedule
+staticfiles/
+media/
+
+# Celery / Redis / Postgres data
+celerybeat-schedule*
 celerybeat.pid
 dump.rdb
 postgres_data/
+
+# Tests and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
