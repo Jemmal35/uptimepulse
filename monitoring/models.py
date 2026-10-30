@@ -22,7 +22,7 @@ class MonitoredSite(models.Model):
     name = models.CharField(max_length= 100)
     url = models.URLField(db_index= True)
     check_interval = models.IntegerField(default= 60)
-    last_checked_at = models.DateTimeField(auto_now_add= True)
+    last_checked_at = models.DateTimeField(null=True, blank=True)
     expected_status_code = models.IntegerField(default= 200)
     timeout_seconds = models.IntegerField(default= 10)
     is_active = models.BooleanField(default= True)

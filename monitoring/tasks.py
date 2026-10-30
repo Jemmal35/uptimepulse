@@ -76,15 +76,15 @@ def ping_site_task(site_id):
 
 @shared_task
 def ping_all_active_sites_task():
-
-    active_sites = MonitoredSite.objects.filter(is_active=True)
-    dispatched_count = 0
-
-    for site in active_sites:
-        ping_site_task.delay(site.id)
-        dispatched_count += 1
-
-    return f"Dispatched background check task for {dispatched_count} active sites"
+    now = timezone.now()
+    dispatched = 0
+    for site in MonitoredSite.objects.filter(is_active=True):
+        due = (site.last_checked_at is None or
+               (now - site.last_checked_at).total_seconds() >= site.check_interval - 5)
+        if due:
+            ping_site_task.delay(site.id)
+            dispatched += 1
+    return f"Dispatched background check task for {dispatched} active sites"
 
 
 def handle_incidents(log, error_message):

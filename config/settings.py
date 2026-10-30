@@ -143,6 +143,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_THROTTLE_RATES': {
+        'register': '5/hour',
+    },
 }
 
 # SimpleJWT Settings
@@ -203,3 +206,8 @@ DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 AI_MODEL = os.getenv("AI_MODEL", "gemini-3.5-flash-lite")
 AI_ANALYSIS_ENABLED = os.getenv("AI_ANALYSIS_ENABLED", "True") == "True"
+
+
+INSTALLED_APPS += ["corsheaders"]
+MIDDLEWARE.insert(0, "corsheaders.middleware.CorsMiddleware")
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
